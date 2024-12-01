@@ -1,19 +1,25 @@
-import re
-
 from lib.helpers import get_all_strings_by_lines, log
 
 
 def part_1():
     input_arr = get_all_strings_by_lines("1.txt")
     log(input_arr)
+    numbers = [line.split("   ") for line in input_arr]
+    log(numbers)
+    left_side = []
+    right_side = []
+    for x, y in numbers:
+        left_side.append(int(x))
+        right_side.append(int(y))
+
+    left_side.sort()
+    right_side.sort()
+    log(left_side)
+    log(right_side)
 
     cur_prod = 0
-    for val in input_arr:
-        # Get the digits
-        digits = re.findall(r"\d", val)
-        # Conver with the ~decimal~ system wow!
-        d = (int(digits[0]) * 10) + (int(digits[-1]))
-        cur_prod += d
+    for i in range(len(left_side)):
+        cur_prod += abs(left_side[i] - right_side[i])
 
     return cur_prod
 
@@ -21,25 +27,22 @@ def part_1():
 def part_2():
     input_arr = get_all_strings_by_lines("1.txt")
     log(input_arr)
+    numbers = [line.split("   ") for line in input_arr]
+    log(numbers)
+    left_side = []
+    right_side = []
+    for x, y in numbers:
+        left_side.append(int(x))
+        right_side.append(int(y))
 
-    cur_prod = 0
-    for val in input_arr:
-        # Just replace each word with the word, the digit, and then the word again.
-        # This will keep any words that share letters from getting broken up.
-        numbered = re.sub(r"one", "on1e", val, flags=re.S)
-        numbered = re.sub(r"two", "t2wo", numbered, flags=re.S)
-        numbered = re.sub(r"three", "thr3ee", numbered, flags=re.S)
-        numbered = re.sub(r"four", "fo4ur", numbered, flags=re.S)
-        numbered = re.sub(r"five", "fi5ve", numbered, flags=re.S)
-        numbered = re.sub(r"six", "si6x", numbered, flags=re.S)
-        numbered = re.sub(r"seven", "se7ven", numbered, flags=re.S)
-        numbered = re.sub(r"eight", "ei8ght", numbered, flags=re.S)
-        numbered = re.sub(r"nine", "ni9ne", numbered, flags=re.S)
+    log(left_side)
+    counts = {}
+    for y in right_side:
+        counts[y] = counts.get(y, 0) + 1
 
-        # Use same regex as before to get a list of just the digits
-        digits = re.findall(r"\d", numbered)
-        log(digits)
-        d = (int(digits[0]) * 10) + (int(digits[-1]))
-        cur_prod += d
+    log(counts)
+    sim_score = 0
+    for x in left_side:
+        sim_score += x * counts.get(x, 0)
 
-    return cur_prod
+    return sim_score
