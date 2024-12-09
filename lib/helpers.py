@@ -8,31 +8,25 @@ def log(string):
 
 
 def get_input(fname):
-    in_str = ''
+    in_str = ""
     dir = "test" if TEST_MODE else "inputs"
     fname = f"./{dir}/{fname}"
-    with open(fname, 'r') as f:
+    with open(fname, "r") as f:
         in_str = f.read()
 
-    return in_str.strip('\n')
+    return in_str.strip("\n")
 
 
 def get_ints_by_lines(fname):
     in_str = get_input(fname)
-    return [
-        int(line.strip('\n')) for line in in_str.split('\n') if line
-    ]
+    return [int(line.strip("\n")) for line in in_str.split("\n") if line]
 
 
 def get_strings_by_lines(fname):
     in_str = get_input(fname)
-    return [
-        line.strip('\n') for line in in_str.split('\n') if line
-    ]
+    return [line.strip("\n") for line in in_str.split("\n") if line]
 
 
 def get_all_strings_by_lines(fname):
     in_str = get_input(fname)
-    return [
-        line.strip('\n') for line in in_str.split('\n')
-    ]
+    return [line.strip("\n") for line in in_str.split("\n")]
